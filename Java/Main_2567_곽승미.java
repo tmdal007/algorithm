@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
 public class Main_2567_곽승미 {
 
     // 2차원배열에서 경계가 바뀌는 부분 카운트(행 기준)
+	// 1->0 or 0->1이면 색종이가 칠해진 부분 => 둘레 더하기
     public static int count(int[][] arr) {
         int cnt = 0;
         for (int[] lst : arr) {
@@ -25,9 +25,9 @@ public class Main_2567_곽승미 {
 
         int T = Integer.parseInt(br.readLine());  // 입력받을 좌표의 개수
 
-        int[][] arr = new int[102][102];  // 102x102 배열 생성
+        int[][] arr = new int[102][102];  // 102x102 배열 생성(가장자리 고려)
 
-        // 입력받은 좌표에 10x10 크기의 사각형 1로 채우기
+        // 입력받은 좌표에 10x10 크기의 사각형 1로 채우기(색종이 칠하기)
         for (int t = 0; t < T; t++) {
             String[] input = br.readLine().split(" ");
             int si = Integer.parseInt(input[0]);  // 시작 x좌표
@@ -49,11 +49,8 @@ public class Main_2567_곽승미 {
 
         // 원본 배열과 전치 배열에서 경계 변화를 모두 계산
         int ans = count(arr) + count(arr_t);
-        System.out.printf("%d %d",count(arr),count(arr_t));
 
         // 결과 출력
         System.out.println(ans);
     }
 }
-
-
