@@ -1,5 +1,7 @@
 package day0829;
-
+/*
+ * SWEA_2382. 미생물 격리
+ */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
