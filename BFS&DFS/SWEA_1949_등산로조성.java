@@ -1,11 +1,14 @@
 package day0903;
-
+/*
+ * SWEA 1949. 등산로 조성
+ * DFS로 풀이
+ */
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class SWEA_1949_등산로조성 {
-    static int N, K, ans;
+    static int N, K, result;
     static int[][] mountain, visited;
     static int[][] deltas = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}}; // 이동 방향 배열
 
@@ -31,7 +34,7 @@ public class SWEA_1949_등산로조성 {
                 }
             }
 
-            ans = 0;
+            result = 0;
 
             // 최대 높이에서 시작하는 DFS 호출
             for (int i = 0; i < N; i++) {
@@ -42,12 +45,12 @@ public class SWEA_1949_등산로조성 {
                 }
             }
 
-            System.out.println("#" + tc + " " + ans);
+            System.out.println("#" + tc + " " + result);
         }
     }
 
     static void dfs(int x, int y, int dis, int K) {
-        ans = Math.max(ans, dis); // 최대 거리 갱신
+    	result = Math.max(result, dis); // 최대 거리 갱신
 
         visited[x][y] = 1; // 방문 표시
 
