@@ -5,7 +5,7 @@ package day0904;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -21,8 +21,8 @@ public class SWEA_5658_보물상자비밀번호 {
 			N = Integer.parseInt(st.nextToken());
 			K = Integer.parseInt(st.nextToken());
 			char[] line = br.readLine().toCharArray();
-			System.out.println(line.length);
-			list = new LinkedHashSet<>();
+			
+			list = new LinkedHashSet<>(); // 순서있는 Set
 			for(int i=0; i<4; i++) {
 				char[] c = new char[N/4];
 				for(int j = i * (N/4); j < (i + 1) * (N/4); j++) {
@@ -34,7 +34,6 @@ public class SWEA_5658_보물상자비밀번호 {
 			// 1칸씩 이동, 중복은 포함하지 않고 list에 생성 가능한 수 저장
 			for(int i=0; i<N/4-1; i++) {
 				char last = line[line.length-1];
-//				System.out.println("last : "+ last);
 				for(int j=N-1; j>0; j--) {
 					line[j] = line[j-1];
 				}
@@ -51,19 +50,14 @@ public class SWEA_5658_보물상자비밀번호 {
 					}
 				}
 			}
-			ArrayList<String> num = new ArrayList<>(list);
-			int[] nlist = new int[num.size()];
+			ArrayList<Integer> nlist = new ArrayList<>();
 			// 16진수 -> 10진수 변환
-			for(int i=0; i<list.size(); i++) {
-				nlist[i] = Integer.parseInt(num.get(i),16);
+			for(String s : list) {
+				nlist.add(Integer.parseInt(s,16));
 			}
-			Arrays.sort(nlist);
-			int[] reverse = new int[nlist.length];
-			for(int i=0; i<nlist.length; i++) {
-				reverse[i] = nlist[nlist.length-1-i];
-			}
-			System.out.println(reverse.length);
-			System.out.println("#"+tc+" "+ reverse[K]);
+			Collections.sort(nlist, Collections.reverseOrder());
+			
+			System.out.println("#"+tc+" "+nlist.get(K-1));
 		}
 	}
 }
