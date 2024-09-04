@@ -1,0 +1,69 @@
+package day0904;
+/*
+ * SWEA 5658. 보물상자 비밀번호
+ */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class SWEA_5658_보물상자비밀번호 {
+	static int N,K;
+	static Set<String> list;
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+		for(int tc=1; tc<=T; tc++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			N = Integer.parseInt(st.nextToken());
+			K = Integer.parseInt(st.nextToken());
+			char[] line = br.readLine().toCharArray();
+			System.out.println(line.length);
+			list = new LinkedHashSet<>();
+			for(int i=0; i<4; i++) {
+				char[] c = new char[N/4];
+				for(int j = i * (N/4); j < (i + 1) * (N/4); j++) {
+			        c[j - i * (N/4)] = line[j]; // 내부 배열 인덱스는 j - i * (N/4)
+			    }
+//				System.out.println(c);
+				list.add(String.valueOf(c));
+			}
+			// 1칸씩 이동, 중복은 포함하지 않고 list에 생성 가능한 수 저장
+			for(int i=0; i<N/4-1; i++) {
+				char last = line[line.length-1];
+//				System.out.println("last : "+ last);
+				for(int j=N-1; j>0; j--) {
+					line[j] = line[j-1];
+				}
+				line[0] = last;
+				
+				for(int c=0; c<4; c++) {
+					char[] pwd = new char[N/4];
+					for(int j = c * (N/4); j < (c + 1) * (N/4); j++) {
+						pwd[j - c * (N/4)] = line[j]; // 내부 배열 인덱스는 j - c * (N/4)
+				    }
+					if(!list.contains(pwd)) {
+						list.add(String.valueOf(pwd));
+//						System.out.println(pwd);
+					}
+				}
+			}
+			ArrayList<String> num = new ArrayList<>(list);
+			int[] nlist = new int[num.size()];
+			// 16진수 -> 10진수 변환
+			for(int i=0; i<list.size(); i++) {
+				nlist[i] = Integer.parseInt(num.get(i),16);
+			}
+			Arrays.sort(nlist);
+			int[] reverse = new int[nlist.length];
+			for(int i=0; i<nlist.length; i++) {
+				reverse[i] = nlist[nlist.length-1-i];
+			}
+			System.out.println(reverse.length);
+			System.out.println("#"+tc+" "+ reverse[K]);
+		}
+	}
+}
