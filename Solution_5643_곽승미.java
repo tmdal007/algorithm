@@ -4,90 +4,69 @@ package day0905;
  */
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Solution_5643_곽승미 {
-	
-	static int N,M;
-	static int[][] list,reverse_list;
-//	static boolean[][] visited;
-	static Set<Integer> check, reverse_check;
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int T = Integer.parseInt(br.readLine());
-		
-		for(int tc = 1; tc<=T; tc++) {
-			N = Integer.parseInt(br.readLine());
-			M = Integer.parseInt(br.readLine());
-			
-			list = new int[N+1][N+1];
-			reverse_list = new int[N+1][N+1];
 
-			
-			for (int i = 0; i < M; i++) {
-				StringTokenizer st = new StringTokenizer(br.readLine());
-				int a = Integer.parseInt(st.nextToken());
-				int b = Integer.parseInt(st.nextToken());
-				
-				list[a][b] = 1;
-				reverse_list[b][a] = 1;
-			}
-			int result = 0;
-			for(int i=1; i<N+1; i++) {
-				check = new HashSet<>();
-				reverse_check = new HashSet<>();
-				dfs(i,new boolean[N+1]);
-				dfs_reverse(i, new boolean[N+1]);
-				System.out.println(check);
-				System.out.println(reverse_check);
-//				for(int c : check) {
-//					for(int r : reverse_check) {
-//						if(c == r)
-//					}
-//				}
+    static int N, M;
+    static int[][] list, reverse_list;
+    static int[] listCnt, relistCnt;  // 큰 사람 수, 작은 사람 수 저장
 
-			}
-//			System.out.println(check);
-			System.out.println("#"+tc+" "+result);
-		}
-		
-	}
-	static void dfs(int cur, boolean[] visited) {
-		
-		visited[cur] = true;
-		
-		check.add(cur);
-		 
-		for (int i = 1; i < N+1; i++) {
-			if(list[cur][i] == 0 || visited[i]) continue;
-			 
-			dfs(i,visited);
-		}
-	}
-	static void dfs_reverse(int cur, boolean[] visited) {
-		 
-		for (int i = 1; i < N+1; i++) {
-			if(reverse_list[i][cur] == 0 || visited[i]) continue;
-			reverse_check.add(cur);
-//			visited[cur] = true;
-			dfs(i,visited);
-		}
-	}
-//	static void dfs_reverse(int cur, boolean[] visited) {
-//		
-////		visited[cur] = true;
-//		
-////		reverse_check.add(cur);
-//		
-//		//자신의 인접정점들 다음 탐색위한 준비!
-//		for (int i = 1; i < N+1; i++) {
-//			if(reverse_list[i][cur] == 0 || visited[i]) continue;
-//			reverse_check.add(i);
-//			visited[i] = true;
-//			dfs(i,visited);
-//		}
-//	}
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine());
+
+        for (int tc = 1; tc <= T; tc++) {
+            N = Integer.parseInt(br.readLine());
+            M = Integer.parseInt(br.readLine());
+
+            list = new int[N + 1][N + 1];
+            reverse_list = new int[N + 1][N + 1];
+            listCnt = new int[N + 1];  // 자신보다 큰 사람 수
+            relistCnt = new int[N + 1];  // 자신보다 작은 사람 수
+
+            for (int i = 0; i < M; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());
+                list[a][b] = 1;  // 정방향
+                reverse_list[b][a] = 1;  // 역방향
+            }
+
+            // 각 학생에 대해 자신보다 큰 사람 탐색 (정방향 그래프)
+            for (int i = 1; i <= N; i++) {
+                dfs(i, new boolean[N + 1], list, listCnt);
+            }
+
+            // 각 학생에 대해 자신보다 작은 사람 탐색 (역방향 그래프)
+            for (int i = 1; i <= N; i++) {
+                dfs(i, new boolean[N + 1], reverse_list, relistCnt);
+            }
+
+            // 자신보다 큰 사람과 작은 사람의 합이 N-1이면 정확한 순서를 알 수 있음
+            int result = 0;
+            for (int i = 1; i <= N; i++) {
+                if (listCnt[i] + relistCnt[i] == N - 1) {
+                    result++;
+                }
+            }
+
+            System.out.println("#" + tc + " " + result);
+        }
+    }
+
+    // DFS 탐색을 통해 자신보다 큰 사람 또는 작은 사람 수를 세기
+    static void dfs(int cur, boolean[] visited, int[][] graph, int[] count) {
+        visited[cur] = true;
+
+        for (int i = 1; i <= N; i++) {
+            if (graph[cur][i] == 1 && !visited[i]) {
+                count[i]++;
+                dfs(i, visited, graph, count);
+            }
+        }
+    }
 }
+
+  
   
