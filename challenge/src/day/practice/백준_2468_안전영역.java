@@ -30,10 +30,10 @@ public class 백준_2468_안전영역 {
 
         // 최대 물 높이 찾기
         int max = 0;
-        for (int[] row : map) {
-            for (int value : row) {
-                if (value > max) {
-                	max = value; // 최대 물 높이 업데이트
+        for(int[] row : map) {
+            for(int r : row) {
+                if(r > max) {
+                	max = r; // 최대 물 높이 업데이트
                 }
             }
         }
