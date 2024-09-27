@@ -38,7 +38,7 @@ public class 백준_5972_택배배송 {
         // 1-based index 처리 위해 N+1 크기로 설정
         Node[] list = new Node[N + 1];
 
-        // 간선 정보 입력 (양방향 그래프)
+        // 간선 정보 입력 (양방향 그래프) 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
