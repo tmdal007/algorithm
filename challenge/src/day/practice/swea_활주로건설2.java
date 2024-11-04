@@ -68,6 +68,8 @@ public class swea_활주로건설2 {
                     return false;
                 }
             }
+            
+            
             else if (line[i] - 1 == line[i + 1]) { // 내리막 경사 확인
                 if (!install(line, visited, i + 1, 1)) {
                     return false;
