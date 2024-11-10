@@ -17,6 +17,7 @@ public class 백준_17471_게리맨더링 {
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
+		
 		N = Integer.parseInt(br.readLine());
 		
 		people = new int[N];
